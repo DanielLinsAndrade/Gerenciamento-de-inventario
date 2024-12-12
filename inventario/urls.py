@@ -28,11 +28,6 @@ router.register("categories", CategoryViewSet, basename="categories")
 router.register("items", ItemViewSet, basename="item")
 router.register("users", UserViewSet, basename="users")
 
-
-def trigger_error(request):
-    division_by_zero = 1 / 0
-
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/token-auth/", views.obtain_auth_token),
