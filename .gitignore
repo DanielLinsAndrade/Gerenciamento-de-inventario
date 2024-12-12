@@ -1,1 +1,4 @@
 venv/
+inventory/__pycache__/
+usuario/__pycache__/
+inventario/__pycache__/
