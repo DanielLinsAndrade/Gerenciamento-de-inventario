@@ -1,0 +1,2 @@
+[TYPECHECK]
+ignored-classes=Category, Item, E1101, F401, Funcionario
