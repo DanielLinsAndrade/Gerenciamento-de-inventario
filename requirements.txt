@@ -17,7 +17,6 @@ pytest-django
 pytz
 PyYAML
 referencing
-rpds-py
 sentry-sdk
 sqlparse
 tomli
