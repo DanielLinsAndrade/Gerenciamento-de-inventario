@@ -24,6 +24,7 @@ Dependências:
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Category, Item
 from .serializers import CategorySerializer, ItemSerializer
@@ -43,6 +44,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     Este ViewSet fornece as ações padrão para listar, criar, atualizar,
     recuperar e deletar instâncias de Category.
     """
+    permission_classes = [IsAuthenticated]
     queryset = Category.objects.all()  # noqa: E1101
     serializer_class = CategorySerializer
 
