@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
-=======
     'rest_framework.authtoken',
->>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
     'rest_framework',
     'inventory',
     'usuario',
