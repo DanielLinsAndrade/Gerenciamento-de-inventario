@@ -20,6 +20,7 @@ Dependências:
     validação e transformação dos dados.
 """
 
+<<<<<<< HEAD
 # from django.shortcuts import render  # noqa: F401
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
@@ -27,6 +28,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Category, Item
+=======
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from .models import Category, Funcionario
+>>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
 from .serializers import CategorySerializer, ItemSerializer
 
 # Nota: Os comentários "# noqa: E1101" são usados para informar
@@ -44,7 +52,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
     Este ViewSet fornece as ações padrão para listar, criar, atualizar,
     recuperar e deletar instâncias de Category.
     """
+<<<<<<< HEAD
     permission_classes = [IsAuthenticated]
+=======
+>>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
     queryset = Category.objects.all()  # noqa: E1101
     serializer_class = CategorySerializer
 
@@ -57,7 +68,11 @@ class ItemViewSet(viewsets.ModelViewSet):
     recuperar e deletar instâncias de Item. Também inclui uma ação customizada
     para filtrar itens por categoria.
     """
+<<<<<<< HEAD
     queryset = Item.objects.all()  # noqa: E1101
+=======
+    queryset = Funcionario.objects.all()  # noqa: E1101
+>>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
     serializer_class = ItemSerializer
 
     @action(detail=False, methods=['get'])

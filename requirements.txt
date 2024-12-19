@@ -23,3 +23,7 @@ tomli
 typing_extensions
 uritemplate
 urllib3
+<<<<<<< HEAD
+=======
+pre-commit
+>>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
