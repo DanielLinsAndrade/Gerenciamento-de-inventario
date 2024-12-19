@@ -27,8 +27,6 @@ class Category(models.Model):
         return str(self.name)
 
 
-class Item(models.Model):
-
 class Funcionario(models.Model):
     """
     Representa um item dentro de uma categoria, com quantidade,
