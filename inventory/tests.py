@@ -24,7 +24,7 @@ class ItemTesteCase(TestCase):
             category=self.category
         )
 
-        self.new_user = User.objects.create_user(username="admin", password="adminadmin")
+        self.new_user = User.objects.create_user(username="admin", password="adminadmin") # NOSONAR
         self.new_user.is_staff = True
         self.new_user.is_superuser = True
         self.new_user.save()
