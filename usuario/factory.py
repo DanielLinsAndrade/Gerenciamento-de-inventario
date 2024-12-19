@@ -51,6 +51,6 @@ class FuncionarioFactory:
         """
         funcionarios = []
         for _ in range(num):
-            is_gerente = random.random() < gerente_ratio
+            is_gerente = random.random() < gerente_ratio # NOSONAR
             funcionarios.append(self.create(is_gerente=is_gerente))
         return funcionarios
