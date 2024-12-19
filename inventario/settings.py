@@ -77,9 +77,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'inventario.wsgi.application'
 
-
-<<<<<<< HEAD
-=======
 # Token de teste
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -87,8 +84,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
->>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
