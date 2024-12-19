@@ -27,11 +27,9 @@ class Category(models.Model):
         return str(self.name)
 
 
-<<<<<<< HEAD
 class Item(models.Model):
-=======
+
 class Funcionario(models.Model):
->>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
     """
     Representa um item dentro de uma categoria, com quantidade,
     preço e descrição.
