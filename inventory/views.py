@@ -23,6 +23,8 @@ Dependências:
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import APIException
 
 from .models import Category, Funcionario
 from .serializers import CategorySerializer, ItemSerializer
@@ -44,6 +46,33 @@ class CategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Category.objects.all()  # noqa: E1101
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        """
+        Cria uma nova categoria no sistema.
+
+        Este método sobrescreve o comportamento padrão do ModelViewSet para:
+        - Validar e salvar os dados enviados pelo cliente.
+        - Adicionar tratamento robusto de exceções para lidar com erros
+        esperados e inesperados.
+        """
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+                headers=headers
+            )
+        except APIException as e:
+            return Response(
+                {"detail": str(e)},
+                status=e.status_code if hasattr(
+                    e, 'status_code') else status.HTTP_400_BAD_REQUEST
+            )
 
 
 class ItemViewSet(viewsets.ModelViewSet):
@@ -56,6 +85,34 @@ class ItemViewSet(viewsets.ModelViewSet):
     """
     queryset = Funcionario.objects.all()  # noqa: E1101
     serializer_class = ItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        """
+        Cria um novo registro de Funcionario.
+        Este método sobrescreve o comportamento padrão de criação
+        do ModelViewSet para adicionar tratamento de exceções mais
+        robusto e fornece mensagens de erro detalhadas em casos de
+        falhas, garantindo maior confiabilidade da API.
+        """
+        try:
+            # Serializa os dados enviados na requisição
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED,
+                headers=headers
+            )
+        except APIException as e:
+            # Trata erros conhecidos da API (e.g., validação)
+            return Response(
+                {"detail": str(e)},
+                status=e.status_code if hasattr(
+                    e, 'status_code') else status.HTTP_400_BAD_REQUEST
+            )
 
     @action(detail=False, methods=['get'])
     def filter_by_category(self, request):

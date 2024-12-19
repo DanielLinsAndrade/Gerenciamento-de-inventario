@@ -13,7 +13,7 @@ ViewSet da API que permite operações CRUD no modelo Funcionario.
 """
 from django.contrib.auth.models import User, Group
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import FuncionarioCreateSerializer
@@ -35,7 +35,7 @@ class UserProfileExampleViewSet(ModelViewSet):
         http_method_names: Métodos HTTP permitidos, 'GET' e 'PUT'.
     """
     serializer_class = UserProfileExampleSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = UserProfileExample.objects.all()
     http_method_names = ['get', 'put']
 
@@ -57,38 +57,62 @@ class FuncionarioViewSet(ModelViewSet):
         "Gerentes".
     """
     serializer_class = FuncionarioSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Funcionario.objects.all()
 
-    def create(self, request, *args, **kwargs):
-        serializer = FuncionarioCreateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+    def create(self, request):
+        """
+        Cria um novo registro de Funcionario e associa um usuário ao grupo de
+        gerentes, se necessário. Este método:
+        - Valida os dados enviados pelo cliente utilizando o
+        `FuncionarioCreateSerializer`.
+        - Garante que o nome de usuário (`username`) seja único, adicionando um
+        número incremental caso já exista.
+        - Cria um novo usuário com o nome de usuário e senha fornecidos.
+        - Adiciona o novo usuário ao grupo "Gerentes", se necessário.
+        - Cria um novo registro de `Funcionario` associado ao usuário criado.
+        - Retorna os dados do funcionário criado e uma mensagem de sucesso.
 
-        username = serializer.validated_data['login']
-        original_username = username
-        count = 1
-        while User.objects.filter(username=username).exists():
-            username = f"{original_username}{count}"
-            count += 1
+        Em caso de erro, retorna uma mensagem detalhada e status HTTP
+        apropriado.
+        """
+        try:
+            serializer = FuncionarioCreateSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
 
-        novo_user = User.objects.create_user(
-            username=username,
-            password=serializer.validated_data['senha'],
-        )
+            username = serializer.validated_data['login']
+            original_username = username
+            count = 1
+            while User.objects.filter(username=username).exists():
+                username = f"{original_username}{count}"
+                count += 1
 
-        grupo_gerentes, _ = Group.objects.get_or_create(name="Gerentes")
-        novo_user.groups.add(grupo_gerentes)
+            novo_user = User.objects.create_user(
+                username=username,
+                password=serializer.validated_data['senha'],
+            )
 
-        is_gerente = serializer.validated_data.get('isGerente', False)
+            grupo_gerentes, _ = Group.objects.get_or_create(name="Gerentes")
+            novo_user.groups.add(grupo_gerentes)
 
-        novo_gerente = Funcionario.objects.create(
-            nome=serializer.validated_data['nome'],
-            funcao=serializer.validated_data['funcao'],
-            isGerente=is_gerente,
-            user=novo_user
-        )
+            is_gerente = serializer.validated_data.get('isGerente', False)
 
-        serializer_saida = FuncionarioSerializer(novo_gerente)
-        return Response({"Info": "Cadastro realizado!",
-                         "data": serializer_saida.data},
-                        status=status.HTTP_201_CREATED)
+            novo_gerente = Funcionario.objects.create(
+                nome=serializer.validated_data['nome'],
+                funcao=serializer.validated_data['funcao'],
+                isGerente=is_gerente,
+                user=novo_user
+            )
+
+            serializer_saida = FuncionarioSerializer(novo_gerente)
+            return Response({"Info": "Cadastro realizado!",
+                            "data": serializer_saida.data},
+                            status=status.HTTP_201_CREATED)
+
+        except ValueError as e:
+            # Retorna uma mensagem genérica de erro para o cliente
+            return Response(
+                {"error": "Ocorreu um erro ao criar o funcionário.",
+                    "details": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
