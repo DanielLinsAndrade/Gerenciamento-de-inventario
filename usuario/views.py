@@ -11,34 +11,6 @@ ViewSet da API que permite operações CRUD no modelo Funcionario.
         serializer_class (Serializer): A classe do serializador que
         será usada para a validação e deserialização dos dados do Funcionario.
 """
-
-<<<<<<< HEAD
-# from django.shortcuts import render # noqa: F401
-from rest_framework import viewsets
-from usuario.models import Funcionario
-from .serializers import FuncionarioSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet para realizar operações CRUD no modelo Funcionario.
-
-    Este viewset fornece as seguintes ações padrão:
-        - list: Listar todos os objetos Funcionario.
-        - create: Criar um novo objeto Funcionario.
-        - retrieve: Recuperar um objeto Funcionario específico.
-        - update: Atualizar um objeto Funcionario existente.
-        - destroy: Excluir um objeto Funcionario.
-
-    Atributos:
-        queryset (QuerySet): O conjunto de consultas contendo todos
-        os objetos Funcionario.
-        serializer_class (Serializer): A classe do serializador usada
-        para validar e deserializar os dados do Funcionario.
-    """
-    queryset = Funcionario.objects.all()
-    serializer_class = FuncionarioSerializer
-=======
 from django.contrib.auth.models import User, Group
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
@@ -94,4 +66,3 @@ class FuncionarioViewSet(ModelViewSet):
         return Response({"Info": "Cadastro realizado!",
                          "data": serializer_saida.data},
                         status=status.HTTP_201_CREATED)
->>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
