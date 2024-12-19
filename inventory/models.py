@@ -18,7 +18,7 @@ class Category(models.Model):
     Representa uma categoria de itens.
     """
     name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         """
