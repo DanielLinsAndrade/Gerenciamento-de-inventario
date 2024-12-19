@@ -1,8 +1,5 @@
 from django.test import TestCase
-<<<<<<< HEAD
 
-# Create your tests here.
-=======
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -77,4 +74,3 @@ class FuncionarioTesteCase(TestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Funcionario.objects.filter(nome="Daniel", funcao="tester").exists())
->>>>>>> ce1a5a5 (test: Adicionando testes aos itens e usuários)
