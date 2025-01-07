@@ -46,6 +46,19 @@ _Windows_
 
 Pare o servidor digitando Ctrl+C no terminal.
 
+#### Comandos Adicionais
+
+- **Migrações de Banco de Dados**
+~~~
+    python manage.py makemigrations
+    python manage.py migrate
+~~~
+
+- **Popular Banco de Dados com Dados de Factory**
+~~~
+    python manage.py populate_db
+~~~
+
 Este projeto é baseado no [LISA DRF Quick Project!](<https://github.com/lisa-ufersa/django-quickproject>)
 
 ### Projeto constantemente testado pelo SonarQube Cloud
