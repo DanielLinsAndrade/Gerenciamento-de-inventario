@@ -76,8 +76,8 @@ class FuncionarioFactory:
         funcionario = Funcionario.objects.create(
             name=item_name,  # Nome do item
             category=category,
-            quantity=random.randint(1, 100),
-            price=random.randint(50, 1000),  # Preço aleatório entre 50 e 1000
+            quantity=random.randint(1, 100), # noqa: E1101
+            price=random.randint(50, 1000),  # noqa: E1101
             description=item_descriptions.get(item_name, fake.text(max_nb_chars=250))  # Descrição plausível ou genérica
         )
         return funcionario
