@@ -1,0 +1,27 @@
+@startuml
+
+' Definição das classes do modelo
+class User {
+    +username: string
+    +password: string
+    +email: string
+    ...
+}
+
+class UserProfileExample {
+    +phone_number: string
+    +address: string
+    +birth_date: date
+}
+
+class Funcionario {
+    +nome: string
+    +funcao: string
+    +isGerente: boolean
+}
+
+' Relacionamentos
+UserProfileExample "1" -- "1" User : possui
+Funcionario "1" -- "1" User : associado
+
+@enduml

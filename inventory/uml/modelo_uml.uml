@@ -1,0 +1,19 @@
+@startuml
+
+' Definição das classes do modelo
+class Category {
+    +name: string
+    +description: string
+}
+
+class Item {
+    +name: string
+    +quantity: int
+    +price: decimal
+    +description: string
+}
+
+' Relacionamento entre as classes
+Category "1" -- "0..*" Item : contém
+
+@enduml
