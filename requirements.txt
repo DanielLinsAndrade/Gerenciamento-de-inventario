@@ -24,3 +24,5 @@ typing_extensions
 uritemplate
 urllib3
 pre-commit
+Faker
+factory_boy
