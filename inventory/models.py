@@ -1,36 +1,26 @@
 """
-Modelos Django para representar uma categoria e itens dentro dessa categoria.
-
-Classes:
-    Category: Representa uma categoria de itens com nome e descrição.
-    Item: Representa um item pertencente a uma categoria, contendo nome,
-    quantidade, preço e descrição.
-
-Métodos:
-    __str__: Retorna a representação em string do nome da categoria ou do item.
+Importa os modelos necessários do Django para criação das tabelas.
 """
-
 from django.db import models
 
 
 class Category(models.Model):
     """
-    Representa uma categoria de itens.
+    Categoria de itens com nome e descrição.
     """
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
 
     def __str__(self):
         """
-        Retorna o nome da categoria como string.
+        Retorna o nome da categoria.
         """
         return str(self.name)
 
 
 class Funcionario(models.Model):
     """
-    Representa um item dentro de uma categoria, com quantidade,
-    preço e descrição.
+    Item com nome, categoria, quantidade, preço e descrição.
     """
     name = models.CharField(max_length=100)
     category = models.ForeignKey(
@@ -44,6 +34,6 @@ class Funcionario(models.Model):
 
     def __str__(self):
         """
-        Retorna o nome do item como string.
+        Retorna o nome do item.
         """
         return str(self.name)

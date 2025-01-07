@@ -5,6 +5,8 @@
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.analysis.extraPaths": [
-        "/venv/lib/site-packages"
-    ]
+        "./venv/lib/site-packages"
+    ],
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true
 }

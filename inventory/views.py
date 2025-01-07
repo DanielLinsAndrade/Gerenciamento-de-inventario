@@ -1,7 +1,9 @@
+"""
+Importa as ferramentas do Django REST Framework necessárias para as views.
+"""
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import APIException
 
@@ -11,14 +13,18 @@ from .services import criar_categoria, criar_item, filtrar_itens_por_categoria
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
-
+    """
+    Gerencia as categorias de itens.
+    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request):
+        """
+        Cria uma nova categoria.
+        """
         try:
-            # Usa o serviço para criar a categoria
             data = criar_categoria(request.data, self.get_serializer_class())
             return Response(data, status=status.HTTP_201_CREATED)
         except APIException as e:
@@ -29,14 +35,18 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class ItemViewSet(viewsets.ModelViewSet):
-
+    """
+    Gerencia os itens (funcionários).
+    """
     queryset = Funcionario.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated]
 
     def create(self, request):
+        """
+        Cria um novo item.
+        """
         try:
-            # Usa o serviço para criar o item
             data = criar_item(request.data, self.get_serializer_class())
             return Response(data, status=status.HTTP_201_CREATED)
         except APIException as e:
@@ -47,9 +57,11 @@ class ItemViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def filter_by_category(self, request):
+        """
+        Filtra itens pela categoria.
+        """
         category_name = request.query_params.get('category', None)
         try:
-            # Usa o serviço para filtrar itens por categoria
             data = filtrar_itens_por_categoria(category_name, self.get_serializer_class())
             return Response(data, status=status.HTTP_200_OK)
         except APIException as e:
@@ -59,6 +71,6 @@ class ItemViewSet(viewsets.ModelViewSet):
             )
         except ValueError as e:
             return Response(
-                {"error": "Ocorreu um erro inesperado.", "details": str(e)},
+                {"error": "Erro inesperado.", "details": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
